@@ -4,7 +4,7 @@ import os
 from flask import Flask, send_file, request
 from captcha import Captcha
 
-for file in os.scandir("output"):
+for file in os.scandir("captchas"):
     os.remove(file)
 
 codes = []
@@ -13,16 +13,21 @@ captchas = []
 app = Flask(__name__)
 
 
-@app.route("/index.html")
+@app.route("/")
 def index():
-    send_file("index.html")
+    return send_file("index.html")
+
+
+@app.route("/success")
+def success():
+    return send_file("success.html")
 
 
 @app.route("/api/new")
 def api_new():
     code = new_code()
     codes.append(code)
-    captcha = Captcha(size=(1000, 500), bounds=(4, 8))
+    captcha = Captcha(size=(200, 100), bounds=(4, 8))
     captchas.append(captcha)
     return code
 

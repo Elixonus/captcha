@@ -12,7 +12,7 @@ class Captcha:
     def __init__(self, size: tuple[int, int], bounds: tuple[int, int]) -> None:
         self.number = randint(bounds[0], bounds[1])
         self.size = size
-        self.image = Image.new("RGBA", size, (0, 0, 0))
+        self.image = Image.new("RGBA", size, (255, 255, 255))
         self.stack = []
         emoji_names = []
         for n in range(self.number):
