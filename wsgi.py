@@ -1,13 +1,22 @@
 from random import choice
 from string import ascii_uppercase, digits
-from io import StringIO
-from flask import Flask, send_file
+import os
+from flask import Flask, send_file, request
 from captcha import Captcha
+
+for file in os.scandir("output"):
+    os.remove(file)
 
 codes = []
 captchas = []
 
 app = Flask(__name__)
+
+
+@app.route("/index.html")
+def index():
+    send_file("index.html")
+
 
 @app.route("/api/new")
 def api_new():
@@ -28,12 +37,12 @@ def api_image(code):
             return send_file(path)
 
 
-@app.route("/api/check/<code>/<number>")
-def api_check(code, number):
+@app.route("/api/check/<code>")
+def api_check(code):
     for c in range(len(codes)):
         if codes[c] == code:
             captcha = captchas[c]
-            if number == str(captcha.number):
+            if request.args.get("number") == str(captcha.number):
                 return "Good"
     return "Bad"
 
