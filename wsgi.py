@@ -23,11 +23,17 @@ def success():
     return send_file("success.html")
 
 
+@app.route("/hugging_face.png")
+def hugging_face():
+    return send_file("emojis/hugging.png")
+
+
 @app.route("/api/new")
 def api_new():
     code = new_code()
     codes.append(code)
     captcha = Captcha(size=(200, 100), bounds=(4, 8))
+    captcha.image.save(f"captchas/{code}.png")
     captchas.append(captcha)
     return code
 
@@ -36,10 +42,7 @@ def api_new():
 def api_image(code):
     for c in range(len(codes)):
         if codes[c] == code:
-            captcha = captchas[c]
-            path = f"captchas/{code}.png"
-            captcha.image.save(path)
-            return send_file(path)
+            return send_file(f"captchas/{code}.png")
 
 
 @app.route("/api/check/<code>")

@@ -1,6 +1,7 @@
 from math import hypot
-from random import randint, shuffle
-from PIL import Image
+from random import random, randint, shuffle
+from PIL import Image, ImageFilter
+import numpy as np
 
 
 class Captcha:
@@ -22,6 +23,37 @@ class Captcha:
         for n in range(randint(bounds[0] // 2, bounds[1] // 2)):
             emoji_names.append("money")
         self.add_emojis(emoji_names)
+        r1 = random() - 0.5
+        r2 = random() - 0.5
+        r3 = random() - 0.5
+        for i in range(size[0]):
+            for j in range(size[1]):
+                pixel = self.image.getpixel((i, j))
+                self.image.putpixel((i, j), (min(pixel[0] + round(100 * r1), 255),
+                                             min(pixel[1] + round(100 * r2), 255),
+                                             min(pixel[2] + round(100 * r3), 255)))
+        for i in range(size[0]):
+            for j in range(size[1]):
+                r1 = random() - 0.5
+                r2 = random() - 0.5
+                r3 = random() - 0.5
+                pixel = self.image.getpixel((i, j))
+                self.image.putpixel((i, j), (min(pixel[0] + round(50 * r1), 255),
+                                             min(pixel[1] + round(50 * r2), 255),
+                                             min(pixel[2] + round(50 * r3), 255)))
+        ri = random() - 0.5
+        rj = random() - 0.5
+        for i in range(size[0]):
+            for j in range(size[1]):
+                ir = rj * i / size[0]
+                jr = ri * i / size[1]
+                r1 = random() - 0.5
+                r2 = random() - 0.5
+                r3 = random() - 0.5
+                pixel = self.image.getpixel((i, j))
+                self.image.putpixel((i, j), (min(pixel[0] + round(50 * r1 * ir * jr), 255),
+                                             min(pixel[1] + round(50 * r2 * ir * jr), 255),
+                                             min(pixel[2] + round(50 * r3 * ir * jr), 255)))
 
     def add_emojis(self, names: list[str]) -> None:
         names_shuffled = names.copy()
@@ -38,5 +70,15 @@ class Captcha:
                 return
         self.stack.append(emoji_center)
         emoji_position = (emoji_center[0] - emoji_size // 2, emoji_center[1] - emoji_size // 2)
-        emoji = Image.open(f"emojis/{name}.png").resize((emoji_size, emoji_size))
+        emoji = Image.open(f"emojis/{name}.png").resize((emoji_size, emoji_size)).rotate(360 * random())
+        r1 = random() - 0.5
+        r2 = random() - 0.5
+        r3 = random() - 0.5
+        for i in range(emoji_size):
+            for j in range(emoji_size):
+                pixel = emoji.getpixel((i, j))
+                emoji.putpixel((i, j), (min(pixel[0] + round(80 * r1), 255),
+                                        min(pixel[1] + round(80 * r2), 255),
+                                        min(pixel[2] + round(80 * r3), 255),
+                                        pixel[3]))
         self.image.alpha_composite(emoji, emoji_position)

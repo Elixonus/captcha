@@ -5,13 +5,22 @@
     <title>Title</title>
 </head>
 <body>
-    <h1>Count the hugging faces!</h1>
+    <div style="background-color: darkorange; border-radius: 10px">
+        <h1>Count the hugging faces!</h1>
+        <img src="hugging_face.png" style="height: 100px;">
+    </div>
+    <br>
     <img id="image">
     <br>
-    <input type="number" id="input">
-    <input type="button" value="Check" onclick="checkNumber();">
+    <input type="number" id="input" style="font-size: 50px;">
+    <input type="button" value="Check" onclick="checkNumber();" style="font-size: 50px;">
 
     <style>
+
+        #image
+        {
+            width: 50%;
+        }
 
         body
         {
