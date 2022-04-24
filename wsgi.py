@@ -19,9 +19,9 @@ def index():
     return send_file("index.html")
 
 
-@app.route("/images/<path:path>")
+@app.route("/stars.jpg")
 def images(path):
-    return send_from_directory("static", path)
+    return send_file("stars.jpg")
 
 
 @app.route("/api/new")

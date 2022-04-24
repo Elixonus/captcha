@@ -70,7 +70,7 @@ class Captcha:
                 return
         self.stack.append(emoji_center)
         emoji_position = (emoji_center[0] - emoji_size // 2, emoji_center[1] - emoji_size // 2)
-        emoji = Image.open(f"static/emojis/{name}.png").resize((emoji_size, emoji_size)).rotate(360 * random())
+        emoji = Image.open(f"emojis/{name}.png").resize((emoji_size, emoji_size)).rotate(360 * random())
         r1 = random() - 0.5
         r2 = random() - 0.5
         r3 = random() - 0.5
