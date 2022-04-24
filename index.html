@@ -5,39 +5,41 @@
     <title>Title</title>
 </head>
 <body>
-    <div style="background-color: darkorange; border-radius: 10px">
-        <h1>Count the hugging faces!</h1>
-        <img src="hugging_face.png" style="height: 100px;">
+    <div style="background-color: #ff977d; border-radius: 10px; display: inline-block; justify-content: center; align-items: center; padding: 20px; border: 5px dashed #000000;">
+        <h1 id="heading">Count the hugging faces!</h1>
+        <br>
+        <img id="image">
+        <br>
+        <input type="number" id="input" style="font-size: 50px;">
+        <input type="button" value="Check" onclick="checkNumber();" style="font-size: 50px;">
     </div>
-    <br>
-    <img id="image">
-    <br>
-    <input type="number" id="input" style="font-size: 50px;">
-    <input type="button" value="Check" onclick="checkNumber();" style="font-size: 50px;">
 
     <style>
 
         #image
         {
-            width: 50%;
+            width: 100%;
+            border: 10px solid #000000;
         }
 
         body
         {
             color: black;
-            background-color: yellow;
+            background-image: url("images/stars.jpg");
         }
 
     </style>
 
     <script>
 
-        var code = ""
-        var image = document.getElementById("image")
-        var input = document.getElementById("input")
+        var code = "";
+        var heading = document.getElementById("heading");
+        var image = document.getElementById("image");
+        var input = document.getElementById("input");
+        var timeout = undefined;
         getImage();
 
-        function getImage()
+        function getImage(correct=undefined)
         {
             var xhttp = new XMLHttpRequest()
             xhttp.onreadystatechange = function()
@@ -45,7 +47,24 @@
                 if(this.readyState == 4 && this.status == 200)
                 {
                     code = this.responseText
-                    image.src = "api/image/" + this.responseText
+                    image.src = "api/image?code=" + this.responseText
+
+                    if(correct == true)
+                    {
+                        clearTimeout(timeout);
+                        heading.innerHTML = "Count the hugging faces! Correct 😎"
+                        heading.style.color = "green";
+
+                        timeout = setTimeout(revert, 1000);
+                    }
+
+                    else if(correct == false)
+                    {
+                        clearTimeout(timeout);
+                        heading.innerHTML = "Count the hugging faces! Wrong 😡"
+                        heading.style.color = "red";
+                        timeout = setTimeout(revert, 1000);
+                    }
                 }
             }
             xhttp.open("GET", "api/new");
@@ -59,19 +78,24 @@
             {
                 if(this.readyState == 4 && this.status == 200)
                 {
-                    if(this.responseText != "Good")
+                    if(this.responseText == "Good")
                     {
-                        getImage();
+                        getImage(true);
                     }
 
                     else
                     {
-                        window.location = "./success";
+                        getImage(false);
                     }
                 }
             }
-            xhttp.open("GET", "api/check/" + code + "?number=" + input.value);
+            xhttp.open("GET", "api/check?code=" + code + "&number=" + input.value);
             xhttp.send();
+        }
+
+        function revert()
+        {
+            heading.style.color = "black";
         }
 
 

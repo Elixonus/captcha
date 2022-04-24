@@ -1,7 +1,7 @@
 from random import choice
 from string import ascii_uppercase, digits
 import os
-from flask import Flask, send_file, request
+from flask import Flask, send_file, request, send_from_directory
 from captcha import Captcha
 
 for file in os.scandir("captchas"):
@@ -13,19 +13,15 @@ captchas = []
 app = Flask(__name__)
 
 
+
 @app.route("/")
 def index():
     return send_file("index.html")
 
 
-@app.route("/success")
-def success():
-    return send_file("success.html")
-
-
-@app.route("/hugging_face.png")
-def hugging_face():
-    return send_file("emojis/hugging.png")
+@app.route("/images/<path:path>")
+def images(path):
+    return send_from_directory("static", path)
 
 
 @app.route("/api/new")
@@ -38,19 +34,22 @@ def api_new():
     return code
 
 
-@app.route("/api/image/<code>")
-def api_image(code):
+@app.route("/api/image")
+def api_image():
+    code = request.args.get("code")
     for c in range(len(codes)):
-        if codes[c] == code:
+        if code == codes[c]:
             return send_file(f"captchas/{code}.png")
 
 
-@app.route("/api/check/<code>")
-def api_check(code):
+@app.route("/api/check")
+def api_check():
+    code = request.args.get("code")
+    number = request.args.get("number")
     for c in range(len(codes)):
-        if codes[c] == code:
+        if code == codes[c]:
             captcha = captchas[c]
-            if request.args.get("number") == str(captcha.number):
+            if number == str(captcha.number):
                 return "Good"
     return "Bad"
 
