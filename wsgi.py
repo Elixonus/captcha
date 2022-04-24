@@ -1,11 +1,7 @@
 from random import choice
 from string import ascii_uppercase, digits
-import os
 from flask import Flask, send_file, request, send_from_directory
 from captcha import Captcha
-
-for file in os.scandir("captchas"):
-    os.remove(file)
 
 codes = []
 captchas = []
