@@ -1,7 +1,6 @@
 from math import hypot
 from random import random, randint, shuffle
-from PIL import Image, ImageFilter
-import numpy as np
+from PIL import Image
 
 
 class Captcha:
