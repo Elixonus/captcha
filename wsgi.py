@@ -15,7 +15,7 @@ def index():
 
 
 @app.route("/stars.jpg")
-def images(path):
+def images():
     return send_file("stars.jpg")
 
 
