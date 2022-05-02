@@ -1,2 +1,5 @@
-captchas/*
+captchas
 !captchas/.gitignore
+__pycache__
+venv
+.idea
