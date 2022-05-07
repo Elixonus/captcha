@@ -1,4 +1,5 @@
-# captcha
+# captcha :hugs:
+
 To start the captcha generator web server, go to the main directory and run the command
 ```
 flask run
