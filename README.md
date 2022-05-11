@@ -1,9 +1,9 @@
 # captcha :hugs:
 
+To install the required dependencies, run the command ```pip install -r requirements.txt```
+
 To start the captcha generator web server, go to the main directory and run the command
-```
-flask run
-```
+```flask run```
 which will run ```wsgi.py``` and start the server
 
 ## API
