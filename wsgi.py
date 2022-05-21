@@ -1,21 +1,44 @@
 from random import choice
 from string import ascii_uppercase, digits
-from flask import Flask, send_file, request, send_from_directory
+from flask import Flask, send_file, request, send_from_directory, session
 from captcha import Captcha
 
 codes = []
 captchas = []
 
 app = Flask(__name__)
+app.secret_key = "super secret key"
 
 
 @app.route("/")
 def index():
-    return send_file("index.html")
+    if session.get("pass"):
+        # user remembered as solved
+        return send_file("demo/humans.html")
+    elif session.get("code"):
+        check = api_check()
+        if check == "Good" and session.get("code") == request.args.get("code"):
+            # logging in captcha
+            session["pass"] = True
+            return send_file("demo/humans.html")
+        else:
+            # wrong captcha
+            return send_file("demo/everyone.html")
+    else:
+        # generate captcha
+        session["code"] = api_new()
+        return send_file("demo/everyone.html")
+
+
+@app.route("/admin")
+def admin():
+    return send_file("admin.html")
+
 
 @app.route("/favicon.ico")
 def favicon():
     return send_file("favicon.ico")
+
 
 @app.route("/stars.jpg")
 def stars():
