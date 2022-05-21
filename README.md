@@ -1,4 +1,4 @@
-# captcha :hugs:
+# captcha 🤗
 
 To install the required dependencies, run the command ```pip install -r requirements.txt```
 
