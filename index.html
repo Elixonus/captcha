@@ -9,7 +9,7 @@
     <div style="background-color: #ff977d; border-radius: 10px; display: inline-block; justify-content: center; align-items: center; padding: 20px; border: 5px dashed #000000;">
         <h1 id="heading">Count the hugging faces!</h1>
         <br>
-        <img id="image">
+        <img id="image" alt="Captcha Image">
         <br>
         <input type="number" id="input" style="font-size: 50px;">
         <input type="button" value="Check" onclick="checkNumber();" style="font-size: 50px;">
@@ -42,15 +42,15 @@
 
         function getImage(correct=undefined)
         {
-            var xhttp = new XMLHttpRequest()
+            const xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function()
             {
-                if(this.readyState == 4 && this.status == 200)
+                if(this.readyState === 4 && this.status === 200)
                 {
                     code = this.responseText
                     image.src = "api/image?code=" + this.responseText
 
-                    if(correct == true)
+                    if(correct === true)
                     {
                         clearTimeout(timeout);
                         heading.innerHTML = "Count the hugging faces! Correct 😎"
@@ -59,7 +59,7 @@
                         timeout = setTimeout(revert, 1000);
                     }
 
-                    else if(correct == false)
+                    else if(correct === false)
                     {
                         clearTimeout(timeout);
                         heading.innerHTML = "Count the hugging faces! Wrong 😡"
@@ -74,12 +74,12 @@
 
         function checkNumber()
         {
-            var xhttp = new XMLHttpRequest()
+            const xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function()
             {
-                if(this.readyState == 4 && this.status == 200)
+                if(this.readyState === 4 && this.status === 200)
                 {
-                    if(this.responseText == "Good")
+                    if(this.responseText === "Good")
                     {
                         getImage(true);
                     }
