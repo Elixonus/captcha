@@ -3,30 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <title>Solve Captcha!</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/x-icon" href="./favicon.ico">
 </head>
 <body>
-    <div style="background-color: #ff977d; border-radius: 10px; display: inline-block; justify-content: center; align-items: center; padding: 20px; border: 5px dashed #000000;">
-        <h1 id="heading">Count the hugging faces!</h1>
-        <br>
-        <img id="image" alt="Captcha Image">
-        <br>
-        <input type="number" id="input" style="font-size: 50px;">
-        <input type="button" value="Check" onclick="checkNumber();" style="font-size: 50px;">
+    <div id="container">
+        <h1 id="title">Count the hugging faces!</h1>
+        <img id="image" width="200" height="100">
+        <div id="input">
+            <input type="number" id="text">
+            <input type="button" value="Check" id="button" onclick="checkNumber();">
+        </div>
     </div>
 
     <style>
 
-        #image
-        {
-            width: 100%;
-            border: 10px solid #000000;
-        }
-
         body
         {
-            color: black;
-            background-image: url("stars.jpg");
+            display: flex;
+            background-color: #ffffdd;
+            font-family: sans-serif;
+        }
+
+        #container
+        {
+            max-width: 500px;
+            margin: 20px auto;
+            padding: 20px;
+            text-align: center;
+            background-color: #ffffff;
+            box-shadow: 0 5px 10px #888888;
+            border-radius: 20px;
+        }
+
+        #image
+        {
+            margin: 20px;
+            padding: 0px;
+            width: 400px;
+            height: auto;
+            background-image: url(./stars.jpg);
+            background-color: #000000;
+            outline: 5px solid #ffffff;
+            box-shadow: 0 0 10px #888888;
+        }
+
+        #input
+        {
+            margin: 20px;
+            padding: 20px;
+            background-color: #dddddd;
+            outline: 5px dashed #888888;
+            border-radius: 5px;
+        }
+
+        #text
+        {
+            display: inline-block;
+            font-size: large;
+            border-radius: 3px;
+        }
+
+        #button
+        {
+            display: inline-block;
+            font-size: large;
+            padding: 5px 20px;
+            border-radius: 3px;
+            cursor: pointer;
         }
 
     </style>
@@ -34,7 +77,7 @@
     <script>
 
         var code = "";
-        var heading = document.getElementById("heading");
+        var title = document.getElementById("title");
         var image = document.getElementById("image");
         var input = document.getElementById("input");
         var timeout = undefined;
@@ -48,13 +91,13 @@
                 if(this.readyState === 4 && this.status === 200)
                 {
                     code = this.responseText
-                    image.src = "api/image?code=" + this.responseText
+                    image.src = "./api/image?code=" + this.responseText
 
                     if(correct === true)
                     {
                         clearTimeout(timeout);
-                        heading.innerHTML = "Count the hugging faces! Correct 😎"
-                        heading.style.color = "green";
+                        title.innerHTML = "Count the hugging faces! Correct 😎"
+                        title.style.color = "#00ff00";
 
                         timeout = setTimeout(revert, 1000);
                     }
@@ -62,13 +105,13 @@
                     else if(correct === false)
                     {
                         clearTimeout(timeout);
-                        heading.innerHTML = "Count the hugging faces! Wrong 😡"
-                        heading.style.color = "red";
+                        title.innerHTML = "Count the hugging faces! Wrong 😡"
+                        title.style.color = "#ff0000";
                         timeout = setTimeout(revert, 1000);
                     }
                 }
             }
-            xhttp.open("GET", "api/new");
+            xhttp.open("GET", "./api/new");
             xhttp.send();
         }
 
@@ -90,14 +133,14 @@
                     }
                 }
             }
-            xhttp.open("GET", "api/check?code=" + code + "&number=" + input.value);
+            xhttp.open("GET", "./api/check?code=" + code + "&number=" + input.value);
             xhttp.send();
         }
 
         function revert()
         {
-			heading.innerHTML = "Count the hugging faces!"
-            heading.style.color = "black";
+			title.innerHTML = "Count the hugging faces!"
+            title.style.color = "#000000";
         }
 
 
