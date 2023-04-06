@@ -90,8 +90,8 @@
             {
                 if(this.readyState === 4 && this.status === 200)
                 {
-                    code = this.responseText
-                    image.src = "./api/image?code=" + this.responseText
+                    code = this.responseText;
+                    image.src = "./api/image?code=" + code;
 
                     if(correct === true)
                     {

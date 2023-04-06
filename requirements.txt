@@ -1,2 +1,2 @@
-Flask
-Pillow
+flask
+pillow
