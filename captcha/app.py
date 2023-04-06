@@ -13,9 +13,11 @@ app = Flask(__name__)
 def index():
     return send_file("index.html")
 
+
 @app.route("/favicon.ico")
 def favicon():
     return send_file("favicon.ico")
+
 
 @app.route("/stars.jpg")
 def stars():
