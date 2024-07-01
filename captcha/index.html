@@ -8,7 +8,7 @@
 <body>
     <div id="container">
         <h1 id="title">Count the hugging faces!</h1>
-        <img id="image" width="200" height="100">
+        <img id="image" width="200" height="100" alt="Captcha Image">
         <div id="input">
             <input type="number" id="text">
             <input type="button" value="Check" id="button" onclick="checkNumber();">
@@ -76,10 +76,10 @@
 
     <script>
 
-        var code = "";
-        var title = document.getElementById("title");
-        var image = document.getElementById("image");
-        var input = document.getElementById("input");
+        let code = "";
+        const title = document.getElementById("title");
+        const image = document.getElementById("image");
+        const text = document.getElementById("text");
         var timeout = undefined;
         getImage();
 
@@ -133,7 +133,7 @@
                     }
                 }
             }
-            xhttp.open("GET", "./api/check?code=" + code + "&number=" + input.value);
+            xhttp.open("GET", "./api/check?code=" + code + "&number=" + text.value);
             xhttp.send();
         }
 
