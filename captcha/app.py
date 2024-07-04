@@ -1,7 +1,17 @@
+from os import remove, path, makedirs
+from glob import glob
 from random import choice
 from string import ascii_uppercase, digits
-from flask import Flask, send_file, request, send_from_directory
+from flask import Flask, send_file, request, send_from_directory, abort
 from captcha import Captcha
+
+
+files = glob("captchas/*")
+for file in files:
+    remove(file)
+
+if not path.exists("captchas"):
+    makedirs("captchas")
 
 codes = []
 captchas = []
@@ -40,7 +50,7 @@ def api_image():
     for c in range(len(codes)):
         if code == codes[c]:
             return send_file(f"captchas/{code}.png")
-
+    abort(404)
 
 @app.route("/api/check")
 def api_check():
