@@ -1,4 +1,4 @@
-# captcha 🤗
+# captchagenerator 🤗
 
 ![Example Captcha](./captcha.png)
 
